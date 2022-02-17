@@ -1,0 +1,98 @@
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        
+       // to find x or closer to x 
+        int lo = 0;
+        int hi = arr.length -1;
+        int mid = 0;
+        
+        while(lo <= hi)
+        {
+            mid = (lo + hi)/2;
+            
+            if(arr[mid] == x)
+            {
+                break;
+            }
+            
+            else if(arr[mid] < x)
+            {
+                lo = mid + 1;
+            }
+            
+            else
+            {
+                hi = mid -1;
+            }
+  
+        }
+        
+        int l = mid -1;
+        int r = mid;
+    
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        while(l >= 0 && r < arr.length && k> 0)
+        {
+            if(Math.abs(arr[l] - x) <= Math.abs(arr[r] - x))
+            {
+                list.add(arr[l]);
+                l--;
+            }
+            else
+            {
+                list.add(arr[r]);
+            }
+            k--;
+        }
+        
+        while(k > 0 && l >= 0)
+        {
+            list.add(arr[l]);
+            l--;
+            k--;
+        }
+        
+        while(k > 0 && r < arr.length)
+        {
+            list.add(arr[r]);
+            r++;
+            k--;
+        }
+        
+        Collections.sort(list);
+        
+        return list;
+    }
+}
+
+...........................................
+
+
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        
+       // to find x or closer to x 
+         // Initialize binary search bounds
+        int left = 0;
+        int right = arr.length - k;
+        
+        // Binary search against the criteria described
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (x - arr[mid] > arr[mid + k] - x) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        
+        // Create output in correct format
+        List<Integer> result = new ArrayList<Integer>();
+        for (int i = left; i < left + k; i++) {
+            result.add(arr[i]);
+        }
+        
+        return result;
+    }
+}
