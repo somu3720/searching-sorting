@@ -1,0 +1,40 @@
+class Solution {
+    public int longestRepeatingSubstring(String s) {
+        
+        int n = s.length();
+        
+        //binary search
+        int left = 1, right = n;
+        int L;
+        
+        while(left <= right)
+        {
+             L = left + (right - left)/2;
+            
+            if(search(L,n,s) != -1)
+                left = L + 1;
+            
+            else
+                right = L - 1;
+        }
+        
+        return left - 1;
+    }
+    
+    public int search(int L, int n, String S)
+    {
+        HashSet<String> seen = new HashSet<>();
+        String tmp;
+        for(int start = 0; start < n - L + 1; start++)
+        {
+            tmp = S.substring(start, start + L);
+            if(seen.contains(tmp)) return start;
+            
+            seen.add(tmp);
+        }
+        
+        return -1;
+    }
+}
+
+// use binary search of L length string in the givem string S using Hashset
